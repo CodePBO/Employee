@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.tubes.program;
+import com.sun.jdi.connect.spi.Connection;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 /**
@@ -34,13 +35,15 @@ public class Karyawan extends javax.swing.JFrame {
         try{
             int no = 1;
             String sql = "SELECT * FROM karyawan";
-            java.sql.Connection conn =(Connection)Konfig.configDB();
+            java.sql.Connection conn =(java.sql.Connection)(Connection)Konfig.configDB();
             java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet res = stm.executeQuery(sql);
             
             while(res.next()) {
-                model.addRow(new Onject[]{no++,res.getString(1),res.getString(2),res.getString(3)});
+                model.addRow(new Object[]{no++,res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6)});
+                
             }
+            tabelKaryawan.setModel(model);
             
         }catch (SQLException e){
             System.out.println("Error : " + e.getMessage());
