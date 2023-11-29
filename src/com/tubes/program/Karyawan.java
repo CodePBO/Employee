@@ -3,14 +3,49 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.tubes.program;
-
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
 /**
  *
  * @author User
  */
 public class Karyawan extends javax.swing.JFrame {
     
+    private void kosongkan_form() {
+        txtNIK.setEdittable(true);
+        txtNIK.setText(null);
+        txtNama.setText(null);
+        cbJabatan.setSelectedItem(this);
+        txtAlamat.setText(null);
+        txtEmail.setText(null);
+        txtTelp.setText(null);
+    }
     
+    private void tampilkan_data() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No.");
+        model.addColumn("NIP");
+        model.addColumn("Nama Karyawan");
+        model.addColumn("Jabatan");
+        model.addColumn("Alamat");
+        model.addColumn("Email");
+        model.addColumn("No. Telepon");
+        
+        try{
+            int no = 1;
+            String sql = "SELECT * FROM karyawan";
+            java.sql.Connection conn =(Connection)Konfig.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+            
+            while(res.next()) {
+                model.addRow(new Onject[]{no++,res.getString(1),res.getString(2),res.getString(3)});
+            }
+            
+        }catch (SQLException e){
+            System.out.println("Error : " + e.getMessage());
+        }
+    }
     
     /**
      * Creates new form Karyawan
@@ -39,10 +74,10 @@ public class Karyawan extends javax.swing.JFrame {
         txtNama = new javax.swing.JTextField();
         txtAlamat = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtTlp = new javax.swing.JTextField();
+        txtTelp = new javax.swing.JTextField();
         cbJabatan = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TabelKaryawan = new javax.swing.JTable();
+        tabelKaryawan = new javax.swing.JTable();
         tbSimpan = new javax.swing.JButton();
         tbTambah = new javax.swing.JButton();
         tbEdit = new javax.swing.JButton();
@@ -75,7 +110,7 @@ public class Karyawan extends javax.swing.JFrame {
             }
         });
 
-        TabelKaryawan.setModel(new javax.swing.table.DefaultTableModel(
+        tabelKaryawan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -86,7 +121,7 @@ public class Karyawan extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(TabelKaryawan);
+        jScrollPane1.setViewportView(tabelKaryawan);
 
         tbSimpan.setText("Simpan");
         tbSimpan.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +173,7 @@ public class Karyawan extends javax.swing.JFrame {
                                                     .addComponent(jLabel7))
                                                 .addGap(44, 44, 44)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txtTlp)
+                                                    .addComponent(txtTelp)
                                                     .addComponent(txtEmail)))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -202,7 +237,7 @@ public class Karyawan extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtTlp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tbEdit)
@@ -273,7 +308,6 @@ public class Karyawan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TabelKaryawan;
     private javax.swing.JComboBox<String> cbJabatan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -283,6 +317,7 @@ public class Karyawan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabelKaryawan;
     private javax.swing.JButton tbBatal;
     private javax.swing.JButton tbEdit;
     private javax.swing.JButton tbHapus;
@@ -293,6 +328,6 @@ public class Karyawan extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNIK;
     private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtTlp;
+    private javax.swing.JTextField txtTelp;
     // End of variables declaration//GEN-END:variables
 }
