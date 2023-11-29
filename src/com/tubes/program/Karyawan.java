@@ -55,6 +55,8 @@ public class Karyawan extends javax.swing.JFrame {
      */
     public Karyawan() {
         initComponents();
+        tampilkan_data();
+        kosongkan_form();
     }
 
     /**
