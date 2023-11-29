@@ -9,7 +9,9 @@ package com.tubes.program;
  * @author User
  */
 public class Karyawan extends javax.swing.JFrame {
-
+    
+    
+    
     /**
      * Creates new form Karyawan
      */
@@ -67,6 +69,11 @@ public class Karyawan extends javax.swing.JFrame {
         jLabel7.setText("No. Telepon");
 
         cbJabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IT Engineer", "Network Administrator", "Database Administrator" }));
+        cbJabatan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbJabatanActionPerformed(evt);
+            }
+        });
 
         TabelKaryawan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,6 +109,11 @@ public class Karyawan extends javax.swing.JFrame {
         tbBatal.setText("Batal");
 
         tbKeluar.setText("Keluar");
+        tbKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbKeluarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,6 +227,15 @@ public class Karyawan extends javax.swing.JFrame {
     private void tbSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbSimpanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tbSimpanActionPerformed
+
+    private void cbJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJabatanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbJabatanActionPerformed
+
+    private void tbKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbKeluarActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_tbKeluarActionPerformed
 
     /**
      * @param args the command line arguments
