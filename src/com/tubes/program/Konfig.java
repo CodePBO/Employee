@@ -18,11 +18,11 @@ public class Konfig {
     
     public static Connection configDB()throws SQLException {
         try{
-            String url = "jdbc.mysql://localhost:3306/employee";
+            String url = "jdbc:mysql://localhost:3306/employee";
             String user = "root";
             String pass = "";
             
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             MySQLConfig = DriverManager.getConnection(url, user, pass);
         }catch(SQLException e){
             System.out.println("Koneksi ke Database Gagal " + e.getMessage());
