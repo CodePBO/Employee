@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class Karyawan extends javax.swing.JFrame {
     
     private void kosongkan_form() {
-        txtNIK.setEdittable(true);
+        txtNIK.setEditable(true);
         txtNIK.setText(null);
         txtNama.setText(null);
         cbJabatan.setSelectedItem(this);
