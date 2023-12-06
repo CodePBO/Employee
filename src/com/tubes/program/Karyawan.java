@@ -35,7 +35,7 @@ public class Karyawan extends javax.swing.JFrame {
         try{
             int no = 1;
             String sql = "SELECT * FROM karyawan";
-            java.sql.Connection conn =(java.sql.Connection)(Connection)Konfig.configDB();
+            java.sql.Connection conn = Konfig.configDB();
             java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet res = stm.executeQuery(sql);
             
