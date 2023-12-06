@@ -4,6 +4,8 @@
  */
 package com.tubes.program;
 import com.sun.jdi.connect.spi.Connection;
+
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 /**
@@ -261,10 +263,22 @@ public class Karyawan extends javax.swing.JFrame {
 
     private void tbTambahActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+        kosongkan_form();
     }                                        
 
     private void tbSimpanActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+        try{
+            String sql = "INSERT INTO karyawan VALUES ('"+txtNIK.getText()+"','"+txtNama.getText()+"','"+cbJabatan.getSelectedItem()+"','"+txtAlamat.getText()+"','"+txtEmail.getText()+"','"+txtTelp.getText()+"')";
+            java.sql.Connection conn = Konfig.configDB();
+            java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.execute();
+            JOptionPane.showMessageDialog(null, "Simpan Data Berhasil!");
+            tampilkan_data();
+            kosongkan_form();
+        }catch(HeadlessException | SQLException e){ 
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }                                        
 
     private void cbJabatanActionPerformed(java.awt.event.ActionEvent evt) {                                          
