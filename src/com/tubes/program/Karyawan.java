@@ -4,6 +4,7 @@
  */
 package com.tubes.program;
 import com.sun.jdi.connect.spi.Connection;
+import java.awt.HeadlessException;;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -269,7 +270,7 @@ public class Karyawan extends javax.swing.JFrame {
     private void tbSimpanActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
         try{
-            String sql = "INSERT INTO karyawan VALUES ('"+txtNIK.getText()+"','"+txtNama.getText()+"','"+cbJabatan.getSelectedItem()+"','"+txtAlamat.getText()+"','"+txtEmail.getText()+"','"+txtTelp.getText()+"')";
+            String sql = "INSERT INTO karyawan (nik,nama,jabatan,alamat,email,no_telp) VALUES ('"+txtNIK.getText()+"','"+txtNama.getText()+"','"+cbJabatan.getSelectedItem()+"','"+txtAlamat.getText()+"','"+txtEmail.getText()+"','"+txtTelp.getText()+"')";
             java.sql.Connection conn = Konfig.configDB();
             java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.execute();
