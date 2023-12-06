@@ -4,7 +4,7 @@
  */
 package com.tubes.program;
 import com.sun.jdi.connect.spi.Connection;
-import java.awt.HeadlessException;;
+import java.awt.HeadlessException;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
