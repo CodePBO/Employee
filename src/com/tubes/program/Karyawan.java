@@ -288,7 +288,10 @@ public class Karyawan extends javax.swing.JFrame {
 
     private void tbKeluarActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-        System.exit(0);
+//        System.exit(0);
+        Login login = new Login();
+        login.setVisible(true);
+        dispose();
     }                                        
 
     /**
