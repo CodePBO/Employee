@@ -71,7 +71,7 @@ public class Login extends javax.swing.JFrame {
 
         LoginBtn.setBackground(new java.awt.Color(255, 204, 0));
         LoginBtn.setFont(new java.awt.Font("Rockwell Condensed", 0, 12)); // NOI18N
-        LoginBtn.setText("Cusss lojiin");
+        LoginBtn.setText("Login");
         LoginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoginBtnActionPerformed(evt);
@@ -145,7 +145,7 @@ public class Login extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(48, 51, 107));
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 36)); // NOI18N
-        jLabel3.setText("Hey, you back?!");
+        jLabel3.setText("Employee");
 
         jLabel1.setText("jLabel1");
 
@@ -246,6 +246,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException e) {
+            
             e.printStackTrace();
         }
     }

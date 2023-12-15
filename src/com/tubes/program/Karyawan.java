@@ -5,6 +5,8 @@
 package com.tubes.program;
 import com.sun.jdi.connect.spi.Connection;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -43,7 +45,7 @@ public class Karyawan extends javax.swing.JFrame {
             java.sql.ResultSet res = stm.executeQuery(sql);
             
             while(res.next()) {
-                model.addRow(new Object[]{no++,res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6)});
+                model.addRow(new Object[]{no++,res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7)});
                 
             }
             tabelKaryawan.setModel(model);
@@ -147,13 +149,34 @@ public class Karyawan extends javax.swing.JFrame {
         tbEdit.setText("Edit");
 
         tbHapus.setText("Hapus");
-
+        
+        tbHapus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hapusData();
+            }
+        });
+        
         tbBatal.setText("Batal");
+        
+        tbBatal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                kosongkan_form();
+            }
+        });
 
         tbKeluar.setText("Keluar");
         tbKeluar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbKeluarActionPerformed(evt);
+            }
+        });
+        
+        tbEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadDataToForm();
             }
         });
 
@@ -264,24 +287,104 @@ public class Karyawan extends javax.swing.JFrame {
 
     private void tbTambahActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+        insertData();
         kosongkan_form();
-    }                                        
-
-    private void tbSimpanActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-        try{
-            String sql = "INSERT INTO karyawan (nik,nama,jabatan,alamat,email,no_telp) VALUES ('"+txtNIK.getText()+"','"+txtNama.getText()+"','"+cbJabatan.getSelectedItem()+"','"+txtAlamat.getText()+"','"+txtEmail.getText()+"','"+txtTelp.getText()+"')";
+    }           
+    private void hapusData() {
+    try {
+        int row = tabelKaryawan.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang ingin dihapus!");
+        } else {
+            String nik = tabelKaryawan.getValueAt(row, 1).toString();
+            String sql = "DELETE FROM karyawan WHERE nik=?";
             java.sql.Connection conn = Konfig.configDB();
             java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.execute();
-            JOptionPane.showMessageDialog(null, "Simpan Data Berhasil!");
+            pstm.setString(1, nik);
+            pstm.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data berhasil dihapus!");
             tampilkan_data();
             kosongkan_form();
-        }catch(HeadlessException | SQLException e){ 
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }                                        
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
+    
+    private void loadDataToForm() {
+        int row = tabelKaryawan.getSelectedRow();
+        if (row != -1) {
+            txtNIK.setText(tabelKaryawan.getValueAt(row, 1).toString());
+            txtNama.setText(tabelKaryawan.getValueAt(row, 2).toString());
+            txtAlamat.setText(tabelKaryawan.getValueAt(row, 3).toString());
+            txtEmail.setText(tabelKaryawan.getValueAt(row, 4).toString());
+            txtTelp.setText(tabelKaryawan.getValueAt(row, 5).toString());
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang ingin diubah!");
+        }
+    }              
 
+    private void tbSimpanActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        java.sql.Connection conn = Konfig.configDB();
+        String sql = "SELECT * FROM karyawan WHERE nik=?";
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, txtNIK.getText());
+        java.sql.ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            updateData(); // Panggil metode updateData jika data sudah ada
+        } else {
+            insertData(); // Panggil metode insertData jika data belum ada
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
+
+    private void insertData() {
+    try {
+        String sql = "INSERT INTO karyawan (nik,nama,jabatan,alamat,email,no_telp) VALUES (?,?,?,?,?,?)";
+        java.sql.Connection conn = Konfig.configDB();
+        java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
+
+        pstm.setString(1, txtNIK.getText());
+        pstm.setString(2, txtNama.getText());
+        pstm.setString(3, cbJabatan.getSelectedItem().toString());
+        pstm.setString(4, txtAlamat.getText());
+        pstm.setString(5, txtEmail.getText());
+        pstm.setString(6, txtTelp.getText());
+
+        pstm.execute();
+        JOptionPane.showMessageDialog(null, "Simpan Data Berhasil!");
+        tampilkan_data();
+        kosongkan_form();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
+
+private void updateData() {
+    try {
+        String sql = "UPDATE karyawan SET nama=?, jabatan=?, alamat=?, email=?, no_telp=? WHERE nik=?";
+        java.sql.Connection conn = Konfig.configDB();
+        java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
+
+        pstm.setString(1, txtNama.getText());
+        pstm.setString(2, cbJabatan.getSelectedItem().toString());
+        pstm.setString(3, txtAlamat.getText());
+        pstm.setString(4, txtEmail.getText());
+        pstm.setString(5, txtTelp.getText());
+        pstm.setString(6, txtNIK.getText());
+
+        pstm.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Data berhasil diubah!");
+        tampilkan_data();
+        kosongkan_form();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
     private void cbJabatanActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
     }                                         
@@ -292,7 +395,7 @@ public class Karyawan extends javax.swing.JFrame {
         Login login = new Login();
         login.setVisible(true);
         dispose();
-    }                                        
+    }                
 
     /**
      * @param args the command line arguments

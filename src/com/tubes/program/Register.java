@@ -59,7 +59,7 @@ public class Register extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(48, 51, 107));
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT Condensed", 1, 48)); // NOI18N
-        jLabel2.setText("Welcome ! ");
+        jLabel2.setText("Employee");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -281,27 +281,33 @@ public class Register extends javax.swing.JFrame {
     }                                         
 
     
-    private void RegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // Ambil data dari UI
-        String fullName = nama_lengkap.getText();
-        String usrname = username.getText();
-        String mail = email.getText();
-        String pass = new String(password.getPassword());
+    private void RegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {                                                                                      
+    // Ambil data dari UI
+    String fullName = nama_lengkap.getText();
+    String usrname = username.getText();
+    String mail = email.getText();
+    String pass = new String(password.getPassword());
 
-        try (Connection connection = konfig.configDB()) {
-            String query = "INSERT INTO users (nama, username, email, password) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, fullName);
-                preparedStatement.setString(2, usrname);
-                preparedStatement.setString(3, mail);
-                preparedStatement.setString(4, pass);
-                preparedStatement.executeUpdate();
-                System.out.println("Registrasi berhasil");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    try (Connection connection = konfig.configDB()) {
+        String query = "INSERT INTO users (nama, username, email, password) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, fullName);
+            preparedStatement.setString(2, usrname);
+            preparedStatement.setString(3, mail);
+            preparedStatement.setString(4, pass);
+            preparedStatement.executeUpdate();
+            System.out.println("Registrasi berhasil");
+
+            // Jika registrasi berhasil, arahkan ke halaman Karyawan.java
+            Karyawan karyawan = new Karyawan();
+            karyawan.setVisible(true);
+            dispose();  
         }
-    }                                           
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+                                          
 
     
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {                                      
